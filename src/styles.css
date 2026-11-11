@@ -1067,3 +1067,31 @@ html[data-theme="light"] .hero-orb-wrap {
   .reveal-pending,
   .reveal-visible { opacity: 1 !important; transform: none !important; transition: none !important; pointer-events: auto !important; }
 }
+
+
+/* Shared vector identity: heading, footer and animated hero mark */
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  border-radius: 50%;
+  filter: drop-shadow(0 3px 8px rgba(120, 96, 220, .28));
+  transition: filter .22s ease, transform .22s ease;
+}
+.brand-logo .hero-orb-logo { display: block; width: 100%; height: 100%; }
+.brand:hover .brand-logo {
+  transform: rotate(-7deg) scale(1.06);
+  filter: drop-shadow(0 5px 11px rgba(135, 92, 226, .42));
+}
+.brand-logo--footer { width: 39px; height: 39px; flex-basis: 39px; }
+html[data-theme="light"] .brand-logo { filter: drop-shadow(0 3px 7px rgba(102, 93, 197, .20)); }
+@media (max-width: 600px) {
+  .brand-logo { width: 40px; height: 40px; flex-basis: 40px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-logo { transition: none; }
+  .brand:hover .brand-logo { transform: none; }
+}

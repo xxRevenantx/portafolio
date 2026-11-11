@@ -242,23 +242,23 @@ function ThemeIcon({ theme }: { theme: Theme }) {
  * Full text stays in an invisible layout layer so no lines jump while typing.
  * Screen readers read the complete strings; reduced-motion users get static text.
  */
-function HeroOrbLogo() {
+function HeroOrbLogo({ idPrefix = "hero" }: { idPrefix?: string }) {
   return (
     <svg className="hero-orb-logo" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
       <defs>
-        <linearGradient id="portfolioOrbGradient" x1="0%" y1="0%" x2="25%" y2="100%">
+        <linearGradient id={`${idPrefix}-portfolioOrbGradient`} x1="0%" y1="0%" x2="25%" y2="100%">
           <stop offset="0%" stopColor="#1d88ff" />
           <stop offset="44%" stopColor="#6c66ff" />
           <stop offset="77%" stopColor="#c54dfb" />
           <stop offset="100%" stopColor="#ff4bda" />
         </linearGradient>
-        <radialGradient id="portfolioOrbHighlight" cx="29%" cy="16%" r="75%">
+        <radialGradient id={`${idPrefix}-portfolioOrbHighlight`} cx="29%" cy="16%" r="75%">
           <stop offset="0%" stopColor="#ffffff" stopOpacity=".22" />
           <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
         </radialGradient>
       </defs>
-      <circle cx="100" cy="100" r="87" fill="url(#portfolioOrbGradient)" />
-      <circle cx="100" cy="100" r="87" fill="url(#portfolioOrbHighlight)" />
+      <circle cx="100" cy="100" r="87" fill={`url(#${idPrefix}-portfolioOrbGradient)`} />
+      <circle cx="100" cy="100" r="87" fill={`url(#${idPrefix}-portfolioOrbHighlight)`} />
       <g fill="none" stroke="#fff" strokeWidth="7" strokeLinecap="square" strokeLinejoin="miter">
         <polyline points="73,50 31,99 73,150" />
         <line x1="106" y1="43" x2="96" y2="157" />
@@ -424,7 +424,7 @@ export default function App() {
         <header className="site-header">
           <div className="container header-inner">
             <a href="#inicio" className="brand" aria-label="Carlos Núñez, inicio" onClick={() => setMenuOpen(false)}>
-              <span className="brand-mark" aria-hidden="true">CN<span>.</span></span>
+              <span className="brand-logo" aria-hidden="true"><HeroOrbLogo idPrefix="header" /></span>
               <span className="brand-text">Carlos Núñez</span>
             </a>
             <nav id="principal" className={'navigation' + (menuOpen ? ' is-open' : '')} aria-label={language === 'es' ? 'Navegación principal' : 'Primary navigation'}>
@@ -554,7 +554,7 @@ export default function App() {
             </div>
           </section>
         </main>
-        <footer className="site-footer"><div className="container footer-inner"><span className="brand-mark">CN<span>.</span></span><p>© {new Date().getFullYear()}</p><p>{t.footer}</p></div></footer>
+        <footer className="site-footer"><div className="container footer-inner"><span className="brand-logo brand-logo--footer" aria-hidden="true"><HeroOrbLogo idPrefix="footer" /></span><p>© {new Date().getFullYear()}</p><p>{t.footer}</p></div></footer>
       </div>
     </>
   )

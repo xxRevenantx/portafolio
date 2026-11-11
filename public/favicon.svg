@@ -1,1 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-label="CN"><rect width="80" height="80" rx="20" fill="#071b2b"/><path d="M22 44a17 17 0 0 1 17-18h5v9h-5c-6 0-9 3-9 9s3 9 9 9h5v9h-5a17 17 0 0 1-17-18zm27-18h9l11 20V26h9v36h-9L58 42v20h-9z" fill="#70e4cd" transform="translate(-8 -4) scale(.95)"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Logotipo de Carlos Núñez">
+  <defs>
+    <linearGradient id="orb" x1="0%" y1="0%" x2="25%" y2="100%">
+      <stop offset="0%" stop-color="#1d88ff"/>
+      <stop offset="44%" stop-color="#6c66ff"/>
+      <stop offset="77%" stop-color="#c54dfb"/>
+      <stop offset="100%" stop-color="#ff4bda"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="94" fill="url(#orb)"/>
+  <g fill="none" stroke="#fff" stroke-width="9" stroke-linecap="square">
+    <polyline points="73,50 31,99 73,150"/>
+    <line x1="106" y1="43" x2="96" y2="157"/>
+    <polyline points="130,50 171,99 130,150"/>
+  </g>
+</svg>
