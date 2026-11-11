@@ -405,7 +405,7 @@ export default function App() {
             </div>
           </section>
         </main>
-        <footer className="site-footer"><div className="container footer-inner"><span className="brand-mark">CN<span>.</span></span><p>© {new Date().getFullYear()} Carlos Núñez</p><p>{t.footer}</p></div></footer>
+        <footer className="site-footer"><div className="container footer-inner"><span className="brand-mark">CN<span>.</span></span><p>© {new Date().getFullYear()}</p><p>{t.footer}</p></div></footer>
       </div>
     </>
   )
