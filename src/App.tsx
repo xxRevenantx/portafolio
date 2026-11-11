@@ -228,10 +228,11 @@ function initialLanguage(): Language {
 
 function initialTheme(): Theme {
   try {
-    const saved = localStorage.getItem('portfolio-theme')
+    // Only explicit selections are restored; legacy auto-saved values are ignored.
+    const saved = localStorage.getItem('portfolio-theme-choice')
     if (saved === 'light' || saved === 'dark') return saved
   } catch { /* Storage can be disabled by the browser. */ }
-  return window.matchMedia?.('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+  return 'light'
 }
 
 function ThemeIcon({ theme }: { theme: Theme }) {
@@ -258,7 +259,6 @@ export default function App() {
     document.documentElement.style.colorScheme = theme
     const meta = document.querySelector('meta[name="theme-color"]')
     meta?.setAttribute('content', theme === 'light' ? '#f8faff' : '#081322')
-    try { localStorage.setItem('portfolio-theme', theme) } catch { /* Preference is optional. */ }
   }, [theme])
 
   const navigation = [
@@ -289,7 +289,11 @@ export default function App() {
                 aria-label={language === 'es' ? (theme === 'dark' ? 'Activar modo claro' : 'Activar modo oscuro') : (theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode')}
                 aria-pressed={theme === 'light'}
                 title={language === 'es' ? (theme === 'dark' ? 'Modo claro' : 'Modo oscuro') : (theme === 'dark' ? 'Light mode' : 'Dark mode')}
-                onClick={() => setTheme(current => current === 'dark' ? 'light' : 'dark')}
+                onClick={() => {
+                  const next: Theme = theme === 'dark' ? 'light' : 'dark'
+                  try { localStorage.setItem('portfolio-theme-choice', next) } catch { /* Browsers can block storage. */ }
+                  setTheme(next)
+                }}
               >
                 <ThemeIcon theme={theme} />
                 <span>{language === 'es' ? (theme === 'dark' ? 'Claro' : 'Oscuro') : (theme === 'dark' ? 'Light' : 'Dark')}</span>
