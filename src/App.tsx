@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 type Language = 'es' | 'en'
+type Theme = 'dark' | 'light'
 
 const translations = {
   es: {
@@ -225,8 +226,23 @@ function initialLanguage(): Language {
   return navigator.language.toLowerCase().startsWith('en') ? 'en' : 'es'
 }
 
+function initialTheme(): Theme {
+  try {
+    const saved = localStorage.getItem('portfolio-theme')
+    if (saved === 'light' || saved === 'dark') return saved
+  } catch { /* Storage can be disabled by the browser. */ }
+  return window.matchMedia?.('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+}
+
+function ThemeIcon({ theme }: { theme: Theme }) {
+  return theme === 'dark'
+    ? <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width="18" height="18"><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" /></svg>
+    : <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width="18" height="18"><path d="M20.9 13.2A9 9 0 0 1 10.8 3.1 9.1 9.1 0 1 0 20.9 13.2Z" /></svg>
+}
+
 export default function App() {
   const [language, setLanguage] = useState<Language>(initialLanguage)
+  const [theme, setTheme] = useState<Theme>(initialTheme)
   const [menuOpen, setMenuOpen] = useState(false)
   const [activeProject, setActiveProject] = useState<string | null>(null)
   const t = translations[language]
@@ -236,6 +252,14 @@ export default function App() {
     document.title = language === 'es' ? 'Carlos Núñez | Desarrollador Full Stack' : 'Carlos Núñez | Full Stack Developer'
     try { localStorage.setItem('portfolio-lang', language) } catch { /* Optional preference. */ }
   }, [language])
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    document.documentElement.style.colorScheme = theme
+    const meta = document.querySelector('meta[name="theme-color"]')
+    meta?.setAttribute('content', theme === 'light' ? '#f8faff' : '#081322')
+    try { localStorage.setItem('portfolio-theme', theme) } catch { /* Preference is optional. */ }
+  }, [theme])
 
   const navigation = [
     ['#sobre-mi', t.nav.about],
@@ -259,6 +283,17 @@ export default function App() {
               {navigation.map(([href, label]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}
             </nav>
             <div className="header-actions">
+              <button
+                className="theme-toggle"
+                type="button"
+                aria-label={language === 'es' ? (theme === 'dark' ? 'Activar modo claro' : 'Activar modo oscuro') : (theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode')}
+                aria-pressed={theme === 'light'}
+                title={language === 'es' ? (theme === 'dark' ? 'Modo claro' : 'Modo oscuro') : (theme === 'dark' ? 'Light mode' : 'Dark mode')}
+                onClick={() => setTheme(current => current === 'dark' ? 'light' : 'dark')}
+              >
+                <ThemeIcon theme={theme} />
+                <span>{language === 'es' ? (theme === 'dark' ? 'Claro' : 'Oscuro') : (theme === 'dark' ? 'Light' : 'Dark')}</span>
+              </button>
               <button className="language-toggle" type="button" aria-label={language === 'es' ? 'Change language to English' : 'Cambiar idioma a español'} onClick={() => setLanguage(language === 'es' ? 'en' : 'es')}>{language === 'es' ? 'EN' : 'ES'} <span aria-hidden="true">↗</span></button>
               <button className="menu-toggle" type="button" aria-label={t.menuButton} aria-controls="principal" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}><span /><span /><span /></button>
             </div>
