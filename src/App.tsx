@@ -242,6 +242,32 @@ function ThemeIcon({ theme }: { theme: Theme }) {
  * Full text stays in an invisible layout layer so no lines jump while typing.
  * Screen readers read the complete strings; reduced-motion users get static text.
  */
+function HeroOrbLogo() {
+  return (
+    <svg className="hero-orb-logo" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="portfolioOrbGradient" x1="0%" y1="0%" x2="25%" y2="100%">
+          <stop offset="0%" stopColor="#1d88ff" />
+          <stop offset="44%" stopColor="#6c66ff" />
+          <stop offset="77%" stopColor="#c54dfb" />
+          <stop offset="100%" stopColor="#ff4bda" />
+        </linearGradient>
+        <radialGradient id="portfolioOrbHighlight" cx="29%" cy="16%" r="75%">
+          <stop offset="0%" stopColor="#ffffff" stopOpacity=".22" />
+          <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      <circle cx="100" cy="100" r="87" fill="url(#portfolioOrbGradient)" />
+      <circle cx="100" cy="100" r="87" fill="url(#portfolioOrbHighlight)" />
+      <g fill="none" stroke="#fff" strokeWidth="7" strokeLinecap="square" strokeLinejoin="miter">
+        <polyline points="73,50 31,99 73,150" />
+        <line x1="106" y1="43" x2="96" y2="157" />
+        <polyline points="130,50 171,99 130,150" />
+      </g>
+    </svg>
+  )
+}
+
 function TypewriterHero({ headline, accent, intro }: { headline: string; accent: string; intro: string }) {
   const first = Array.from(headline)
   const second = Array.from(accent)
@@ -397,6 +423,8 @@ export default function App() {
               </div>
             </div>
             <aside className="hero-art" aria-label={language === 'es' ? 'Ilustración conceptual de un entorno de desarrollo' : 'Conceptual illustration of a development environment'}>
+              <div className="hero-orb-wrap" aria-hidden="true"><HeroOrbLogo /></div>
+              <div className="hero-card-float">
               <div className="code-card">
                 <div className="code-card-top"><div className="code-dots"><i /><i /><i /></div><span>developer.profile.ts</span><small>●</small></div>
                 <div className="code-content" aria-hidden="true">
@@ -411,6 +439,7 @@ export default function App() {
                   <p>{'}'}</p>
                 </div>
                 <div className="code-card-bottom"><span className="pulse-dot" /> dev / build / improve <span>● ready</span></div>
+              </div>
               </div>
               <div className="art-glow" />
               <div className="floating-chip floating-chip--top" aria-hidden="true"><span className="floating-chip-dot" /> React + Laravel</div>
