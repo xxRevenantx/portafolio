@@ -348,12 +348,53 @@ function TypewriterHero({ headline, accent, intro }: { headline: string; accent:
   )
 }
 
+
+/** Reveal content once as it enters the viewport; keep content visible without JS. */
+function useScrollReveal() {
+  useEffect(() => {
+    const elements = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'))
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    if (reducedMotion || !('IntersectionObserver' in window)) {
+      elements.forEach(element => {
+        element.classList.remove('reveal-pending')
+        element.classList.add('reveal-visible')
+      })
+      return
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return
+        const element = entry.target as HTMLElement
+        element.classList.remove('reveal-pending')
+        element.classList.add('reveal-visible')
+        observer.unobserve(element)
+      })
+    }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' })
+
+    elements.forEach(element => {
+      // Only animate blocks not already revealed during this mount.
+      if (element.classList.contains('reveal-visible')) return
+      element.classList.add('reveal-pending')
+      observer.observe(element)
+    })
+
+    return () => {
+      observer.disconnect()
+      // React StrictMode unmounts effects in development: never strand content hidden.
+      elements.forEach(element => element.classList.remove('reveal-pending'))
+    }
+  }, [])
+}
+
 export default function App() {
   const [language, setLanguage] = useState<Language>(initialLanguage)
   const [theme, setTheme] = useState<Theme>(initialTheme)
   const [menuOpen, setMenuOpen] = useState(false)
   const [activeProject, setActiveProject] = useState<string | null>(null)
   const t = translations[language]
+  useScrollReveal()
 
   useEffect(() => {
     document.documentElement.lang = language
@@ -448,26 +489,26 @@ export default function App() {
           </section>
           <div className="container"><div className="section-rule" /></div>
           <section id="sobre-mi" className="section container about-section">
-            <div className="about-copy">
+            <div className="about-copy" data-reveal="left">
               <p className="eyebrow"><span className="index">01 /</span> {t.nav.about}</p>
               <h2>{t.summaryTitle}</h2>
               <p className="section-lead">{t.summaryText}</p>
               <p className="education-line"><span className="mini-icon" aria-hidden="true">✦</span>{t.education}</p>
             </div>
             <div className="stats-grid">
-              {t.stats.map(stat => <div className="stat-card" key={stat.value}><strong>{stat.value}</strong><span>{stat.label}</span></div>)}
+              {t.stats.map(stat => <div className="stat-card" data-reveal="up" key={stat.value}><strong>{stat.value}</strong><span>{stat.label}</span></div>)}
             </div>
           </section>
           <section id="proyectos" className="section section-alt">
             <div className="container">
-              <div className="section-heading">
+              <div className="section-heading" data-reveal="up">
                 <p className="eyebrow"><span className="index">02 /</span> {t.sectionProjects}</p>
                 <h2>{t.projectsTitle}</h2>
                 <p className="section-lead">{t.projectsLead}</p>
               </div>
               <div className="project-list">
                 {t.projects.map((project, idx) => (
-                  <article className="project-card" key={project.id}>
+                  <article className="project-card" data-reveal="up" key={project.id}>
                     <ProjectIllustration id={project.id} />
                     <div className="project-body">
                       <p className="eyebrow project-eyebrow">{project.eyebrow}</p>
@@ -490,17 +531,17 @@ export default function App() {
              </div>
           </section>
           <section id="tecnologias" className="section container">
-            <div className="section-heading"><p className="eyebrow"><span className="index">03 /</span> {t.skillsKicker}</p><h2>{t.skillsTitle}</h2><p className="section-lead">{t.skillsLead}</p></div>
-            <div className="skills-grid">{t.skills.map((skill, idx) => <div className="skill-card" key={skill.title}><span className="skill-number">0{idx + 1}</span><h3>{skill.title}</h3><div className="chip-group">{skill.items.map(item => <span className="chip" key={item}>{item}</span>)}</div></div>)}</div>
+            <div className="section-heading" data-reveal="up"><p className="eyebrow"><span className="index">03 /</span> {t.skillsKicker}</p><h2>{t.skillsTitle}</h2><p className="section-lead">{t.skillsLead}</p></div>
+            <div className="skills-grid">{t.skills.map((skill, idx) => <div className="skill-card" data-reveal="up" key={skill.title}><span className="skill-number">0{idx + 1}</span><h3>{skill.title}</h3><div className="chip-group">{skill.items.map(item => <span className="chip" key={item}>{item}</span>)}</div></div>)}</div>
           </section>
           <section id="trayectoria" className="section section-alt">
             <div className="container timeline-container">
-              <div className="section-heading"><p className="eyebrow"><span className="index">04 /</span> {t.journeyKicker}</p><h2>{t.journeyTitle}</h2><p className="section-lead">{t.journeyLead}</p></div>
-              <div className="timeline">{t.timeline.map(item => <article className="timeline-item" key={item.title}><div className="timeline-dot" /><p className="timeline-date">{item.date}</p><div><p className="timeline-type">{item.type}</p><h3>{item.title}</h3><p>{item.description}</p></div></article>)}</div>
+              <div className="section-heading" data-reveal="up"><p className="eyebrow"><span className="index">04 /</span> {t.journeyKicker}</p><h2>{t.journeyTitle}</h2><p className="section-lead">{t.journeyLead}</p></div>
+              <div className="timeline">{t.timeline.map(item => <article className="timeline-item" data-reveal="right" key={item.title}><div className="timeline-dot" /><p className="timeline-date">{item.date}</p><div><p className="timeline-type">{item.type}</p><h3>{item.title}</h3><p>{item.description}</p></div></article>)}</div>
             </div>
           </section>
           <section id="contacto" className="section container contact-section">
-            <div className="contact-panel">
+            <div className="contact-panel" data-reveal="up">
               <p className="eyebrow"><span className="index">05 /</span> {t.contactKicker}</p>
               <h2>{t.contactTitle}</h2>
               <p className="section-lead">{t.contactLead}</p>
