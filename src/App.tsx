@@ -294,6 +294,8 @@ export default function App() {
                 <div className="code-card-bottom"><span className="pulse-dot" /> dev / build / improve <span>● ready</span></div>
               </div>
               <div className="art-glow" />
+              <div className="floating-chip floating-chip--top" aria-hidden="true"><span className="floating-chip-dot" /> React + Laravel</div>
+              <div className="floating-chip floating-chip--bottom" aria-hidden="true"><span className="floating-chip-star">✦</span> TypeScript</div>
             </aside>
           </section>
           <div className="container"><div className="section-rule" /></div>
