@@ -392,9 +392,29 @@ export default function App() {
   const [language, setLanguage] = useState<Language>(initialLanguage)
   const [theme, setTheme] = useState<Theme>(initialTheme)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [headerFixed, setHeaderFixed] = useState(false)
   const [activeProject, setActiveProject] = useState<string | null>(null)
   const t = translations[language]
   useScrollReveal()
+
+  useEffect(() => {
+    let frame: number | null = null
+    const syncHeader = () => {
+      frame = null
+      setHeaderFixed(window.scrollY > 100)
+    }
+    const onScroll = () => {
+      if (frame !== null) return
+      frame = window.requestAnimationFrame(syncHeader)
+    }
+    // Supports restoring a previously scrolled page on reload.
+    syncHeader()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (frame !== null) window.cancelAnimationFrame(frame)
+    }
+  }, [])
 
   useEffect(() => {
     document.documentElement.lang = language
@@ -421,7 +441,8 @@ export default function App() {
     <>
       <a className="skip-link" href="#contenido">{language === 'es' ? 'Ir al contenido' : 'Skip to content'}</a>
       <div className="page-shell">
-        <header className="site-header">
+        <div className="site-header-slot">
+        <header className={'site-header' + (headerFixed ? ' is-floating' : '')}>
           <div className="container header-inner">
             <a href="#inicio" className="brand" aria-label="Carlos Núñez, inicio" onClick={() => setMenuOpen(false)}>
               <span className="brand-logo" aria-hidden="true"><HeroOrbLogo idPrefix="header" /></span>
@@ -451,6 +472,7 @@ export default function App() {
             </div>
           </div>
         </header>
+        </div>
         <main id="contenido">
           <section id="inicio" className="hero container">
             <div className="hero-main">
