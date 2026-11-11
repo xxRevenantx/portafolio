@@ -236,6 +236,92 @@ function ThemeIcon({ theme }: { theme: Theme }) {
     : <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width="18" height="18"><path d="M20.9 13.2A9 9 0 0 1 10.8 3.1 9.1 9.1 0 1 0 20.9 13.2Z" /></svg>
 }
 
+
+/**
+ * Type the hero in three consecutive phases.
+ * Full text stays in an invisible layout layer so no lines jump while typing.
+ * Screen readers read the complete strings; reduced-motion users get static text.
+ */
+function TypewriterHero({ headline, accent, intro }: { headline: string; accent: string; intro: string }) {
+  const first = Array.from(headline)
+  const second = Array.from(accent)
+  const third = Array.from(intro)
+  const headlineEnd = first.length
+  const accentEnd = first.length + second.length
+  const total = accentEnd + third.length
+
+  const [visible, setVisible] = useState(() => (
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches ? total : 0
+  ))
+
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)')
+    let timer: ReturnType<typeof setTimeout> | undefined
+    let count = 0
+
+    const next = () => {
+      count += 1
+      setVisible(count)
+      if (count >= total) return
+      const delay = count === headlineEnd ? 290
+        : count === accentEnd ? 370
+          : count < headlineEnd ? 47
+            : count < accentEnd ? 56 : 18
+      timer = setTimeout(next, delay)
+    }
+
+    const restart = () => {
+      if (timer !== undefined) clearTimeout(timer)
+      count = 0
+      if (media.matches) {
+        setVisible(total)
+        return
+      }
+      setVisible(0)
+      timer = setTimeout(next, 260)
+    }
+
+    restart()
+    media.addEventListener('change', restart)
+    return () => {
+      if (timer !== undefined) clearTimeout(timer)
+      media.removeEventListener('change', restart)
+    }
+  }, [headline, accent, intro, headlineEnd, accentEnd, total])
+
+  const typedHeadline = first.slice(0, Math.min(visible, headlineEnd)).join('')
+  const typedAccent = second.slice(0, Math.min(Math.max(visible - headlineEnd, 0), second.length)).join('')
+  const typedIntro = third.slice(0, Math.min(Math.max(visible - accentEnd, 0), third.length)).join('')
+  const phase = visible < headlineEnd ? 'headline'
+    : visible < accentEnd ? 'accent'
+      : visible < total ? 'intro' : 'done'
+
+  return (
+    <>
+      <h1 className="typewriter-heading" aria-label={headline + ' ' + accent}>
+        <span className="typewriter-line">
+          <span className="typewriter-ghost" aria-hidden="true">{headline}</span>
+          <span className="typewriter-live" aria-hidden="true">
+            {typedHeadline}{phase === 'headline' && <span className="typewriter-caret" />}
+          </span>
+        </span>
+        <span className="typewriter-line">
+          <span className="typewriter-ghost" aria-hidden="true">{accent}</span>
+          <span className="typewriter-live gradient-text" aria-hidden="true">
+            {typedAccent}{phase === 'accent' && <span className="typewriter-caret typewriter-caret--accent" />}
+          </span>
+        </span>
+      </h1>
+      <p className="hero-intro typewriter-paragraph" aria-label={intro}>
+        <span className="typewriter-ghost" aria-hidden="true">{intro}</span>
+        <span className="typewriter-live" aria-hidden="true">
+          {typedIntro}{phase === 'intro' && <span className="typewriter-caret typewriter-caret--intro" />}
+        </span>
+      </p>
+    </>
+  )
+}
+
 export default function App() {
   const [language, setLanguage] = useState<Language>(initialLanguage)
   const [theme, setTheme] = useState<Theme>(initialTheme)
@@ -303,8 +389,7 @@ export default function App() {
             <div className="hero-main">
               <div className="availability"><span className="status-dot" />{t.available}</div>
               <p className="eyebrow hero-eyebrow">{t.heroKicker}</p>
-              <h1>{t.heroHeadline}<br /><span className="gradient-text">{t.heroAccent}</span></h1>
-              <p className="hero-intro">{t.heroIntro}</p>
+              <TypewriterHero key={language} headline={t.heroHeadline} accent={t.heroAccent} intro={t.heroIntro} />
               <div className="hero-actions">
                 <a className="btn btn-primary" href="#proyectos">{t.seeProjects}<Arrow /></a>
                 <a className="btn btn-outline" href="#contacto">{t.getInTouch}<Arrow diagonal /></a>

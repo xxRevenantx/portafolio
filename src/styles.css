@@ -903,3 +903,61 @@ html[data-theme="light"] .footer-inner { color: #576d85; }
 @media (max-width: 380px) {
   .brand-text { display: none; }
 }
+
+
+/* Hero typewriter: fixed line geometry, sequential typing, understated caret */
+.typewriter-heading .typewriter-line {
+  position: relative;
+  display: block;
+}
+.typewriter-line .typewriter-ghost,
+.typewriter-paragraph .typewriter-ghost {
+  visibility: hidden;
+  pointer-events: none;
+}
+.typewriter-line .typewriter-live,
+.typewriter-paragraph .typewriter-live {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  pointer-events: none;
+}
+.typewriter-line .typewriter-live:not(.gradient-text) {
+  color: inherit;
+}
+.typewriter-paragraph {
+  position: relative;
+}
+.typewriter-caret {
+  display: inline-block;
+  width: .065em;
+  min-width: 2px;
+  height: .82em;
+  margin-left: .07em;
+  vertical-align: -.065em;
+  border-radius: 2px;
+  background: #64cffa;
+  box-shadow: 0 0 12px rgba(100, 207, 250, .36);
+  animation: typewriter-blink .85s steps(1, end) infinite;
+}
+.typewriter-caret--accent {
+  background: #c5a2ff;
+  box-shadow: 0 0 14px rgba(168, 113, 248, .4);
+}
+.typewriter-caret--intro {
+  background: #6fe3cc;
+  height: 1.05em;
+  vertical-align: -.18em;
+  box-shadow: 0 0 9px rgba(78, 198, 187, .28);
+}
+html[data-theme="light"] .typewriter-caret { background: #4166c6; }
+html[data-theme="light"] .typewriter-caret--accent { background: #9243bd; }
+html[data-theme="light"] .typewriter-caret--intro { background: #087e91; }
+@keyframes typewriter-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .typewriter-caret { display: none; animation: none; }
+}
