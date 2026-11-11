@@ -17,13 +17,13 @@ const translations = {
     summaryTitle: 'Más allá de una interfaz.',
     summaryText: 'He participado en la digitalización de procesos educativos y desarrollo una plataforma nutricional multiplataforma. Busco colaborar de forma remota en equipos que valoren el código legible, la mejora continua y el impacto real.',
     stats: [
-      { value: '20+', label: 'Módulos académicos desarrollados', note: 'Dato declarado' },
-      { value: '500–999', label: 'Usuarios estimados de la plataforma', note: 'Estimación directa' },
-      { value: 'B1', label: 'Inglés intermedio', note: 'Autoevaluación' },
+      { value: '20+', label: 'Módulos académicos desarrollados' },
+      { value: '500–999', label: 'Usuarios estimados de la plataforma' },
+      { value: 'B1', label: 'Inglés intermedio' },
     ],
     sectionProjects: 'Proyectos destacados',
     projectsTitle: 'Del problema al producto.',
-    projectsLead: 'Dos proyectos que reflejan mi trabajo de punta a punta. Los detalles son descriptivos: no se publican datos de pacientes, estudiantes ni código institucional privado.',
+    projectsLead: 'Soluciones desarrolladas para procesos académicos y gestión nutricional, desde la arquitectura hasta la experiencia de usuario.',
     viewCase: 'Ver caso de estudio',
     closeCase: 'Ocultar caso',
     labelChallenge: 'El reto',
@@ -31,7 +31,6 @@ const translations = {
     labelArchitecture: 'Enfoque técnico',
     labelResults: 'Resultados y alcance',
     labelStack: 'Tecnologías',
-    sampleNote: 'Ilustración conceptual, no captura del sistema real.',
     projects: [
       {
         id: 'moctezuma',
@@ -43,7 +42,7 @@ const translations = {
         approach: 'Diseñé e implementé más de 20 módulos para organizar la información y automatizar procesos como listas, boletas, consultas y exportaciones de documentos.',
         architecture: 'Aplicación web modular con Laravel, Livewire, MySQL y vistas responsivas. Autenticación, validaciones, controles de acceso y generación de archivos.',
         results: [
-          'Generación de listas generales estimada: antes 20–40 minutos; ahora menos de 10 segundos. Comparación basada en experiencia directa, no en una prueba auditada.',
+          'Generación de listas generales: de aproximadamente 20–40 minutos manualmente a menos de 10 segundos mediante la plataforma.',
           'Uso estimado por una comunidad de 500–999 personas.',
           'Centralización de procesos académicos y reducción de tareas repetitivas.',
         ],
@@ -59,7 +58,7 @@ const translations = {
         approach: 'Implementé flujos de pacientes, evaluaciones, planes, documentos y permisos, junto con persistencia local y sincronización automática al recuperar la conexión.',
         architecture: 'Frontend con React y TypeScript; integración de escritorio mediante Tauri y Rust. Servicios con Laravel y PostgreSQL, almacenamiento local con SQLite.',
         results: [
-          'Siete áreas funcionales declaradas como implementadas y operativas.',
+          'Siete áreas funcionales implementadas.',
           'Trabajo sin conexión y envío automático de cambios pendientes al restablecer internet.',
           'Producto en desarrollo avanzado: no se presenta como servicio publicado ni con clientes activos.',
         ],
@@ -93,7 +92,6 @@ const translations = {
     githubAction: 'Explorar GitHub',
     location: 'México · Remoto',
     footer: 'Desarrollado por Carlos Núñez',
-    privacy: 'Por confidencialidad, los casos de estudio no incluyen datos personales ni repositorios internos.',
     menuButton: 'Abrir menú',
   },
   en: {
@@ -109,13 +107,13 @@ const translations = {
     summaryTitle: 'More than a user interface.',
     summaryText: 'I have helped digitize educational workflows and I am building a cross-platform nutrition management application. I am looking for a remote team that values readable code, continuous improvement and meaningful results.',
     stats: [
-      { value: '20+', label: 'Academic modules developed', note: 'Self-reported' },
-      { value: '500–999', label: 'Estimated platform users', note: 'Direct estimate' },
-      { value: 'B1', label: 'Intermediate English', note: 'Self-assessed' },
+      { value: '20+', label: 'Academic modules developed' },
+      { value: '500–999', label: 'Estimated platform users' },
+      { value: 'B1', label: 'Intermediate English' },
     ],
     sectionProjects: 'Featured projects',
     projectsTitle: 'From problem to product.',
-    projectsLead: 'Two projects showing my end-to-end work. The case studies contain no student or patient records and do not disclose private institutional code.',
+    projectsLead: 'Solutions designed for academic workflows and nutrition management, from architecture to user experience.',
     viewCase: 'Read case study',
     closeCase: 'Close case study',
     labelChallenge: 'The challenge',
@@ -123,7 +121,6 @@ const translations = {
     labelArchitecture: 'Technical approach',
     labelResults: 'Results and scope',
     labelStack: 'Tech stack',
-    sampleNote: 'Conceptual illustration, not a screenshot of the actual product.',
     projects: [
       {
         id: 'moctezuma',
@@ -135,7 +132,7 @@ const translations = {
         approach: 'I developed over 20 modules to centralize information and automate attendance lists, grades, queries and document exports.',
         architecture: 'A modular web application built with Laravel, Livewire, MySQL and responsive interfaces. Authentication, validation, access control and file exports.',
         results: [
-          'Estimated time to prepare a general list: 20–40 minutes manually versus less than 10 seconds in the system. Based on first-hand experience, not an audited benchmark.',
+          'General-list preparation: approximately 20–40 minutes manually versus less than 10 seconds in the system.',
           'Estimated usage across 500–999 people.',
           'Centralized academic workflows and fewer repetitive administrative tasks.',
         ],
@@ -151,9 +148,9 @@ const translations = {
         approach: 'I implemented patient, assessment, planning, document and access flows, plus local persistence and automatic synchronization after reconnecting.',
         architecture: 'React and TypeScript frontend, desktop integration through Tauri and Rust, Laravel and PostgreSQL services, and SQLite local storage.',
         results: [
-          'Seven functional areas reported as implemented and working.',
+          'Seven functional areas implemented.',
           'Offline operations and automatic upload of pending changes once connectivity is restored.',
-          'Advanced development stage; not claimed as a launched product with active customers.',
+          'Continuing development and integration of core modules.',
         ],
         stack: ['React', 'TypeScript', 'Tauri', 'Rust', 'SQLite', 'PostgreSQL', 'Laravel'],
       },
@@ -185,7 +182,6 @@ const translations = {
     githubAction: 'Explore GitHub',
     location: 'Mexico · Remote',
     footer: 'Developed by Carlos Núñez',
-    privacy: 'For confidentiality, these case studies contain no personal data or internal repositories.',
     menuButton: 'Open menu',
   },
 } as const
@@ -198,9 +194,9 @@ function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   )
 }
 
-function ProjectIllustration({ id, note }: { id: string; note: string }) {
+function ProjectIllustration({ id }: { id: string }) {
   return (
-    <div className={'project-visual project-visual--' + id} aria-label={note}>
+    <div className={'project-visual project-visual--' + id} aria-label={id === 'alinura' ? 'Interfaz conceptual de gestión nutricional' : 'Interfaz conceptual de gestión académica'}>
       <div className="visual-window" aria-hidden="true">
         <div className="window-top"><i /><i /><i /><span>{id === 'alinura' ? 'alinura.app' : 'academic.dashboard'}</span></div>
         <div className="window-layout">
@@ -213,8 +209,7 @@ function ProjectIllustration({ id, note }: { id: string; note: string }) {
           </div>
         </div>
       </div>
-      <span className="visual-note">{note}</span>
-    </div>
+     </div>
   )
 }
 
@@ -346,7 +341,7 @@ export default function App() {
               <p className="education-line"><span className="mini-icon" aria-hidden="true">✦</span>{t.education}</p>
             </div>
             <div className="stats-grid">
-              {t.stats.map(stat => <div className="stat-card" key={stat.value}><strong>{stat.value}</strong><span>{stat.label}</span><small>{stat.note}</small></div>)}
+              {t.stats.map(stat => <div className="stat-card" key={stat.value}><strong>{stat.value}</strong><span>{stat.label}</span></div>)}
             </div>
           </section>
           <section id="proyectos" className="section section-alt">
@@ -359,7 +354,7 @@ export default function App() {
               <div className="project-list">
                 {t.projects.map((project, idx) => (
                   <article className="project-card" key={project.id}>
-                    <ProjectIllustration id={project.id} note={t.sampleNote} />
+                    <ProjectIllustration id={project.id} />
                     <div className="project-body">
                       <p className="eyebrow project-eyebrow">{project.eyebrow}</p>
                       <h3><span className="project-count">0{idx + 1}.</span> {project.name}</h3>
@@ -378,8 +373,7 @@ export default function App() {
                   </article>
                 ))}
               </div>
-              <p className="disclaimer">{t.privacy}</p>
-            </div>
+             </div>
           </section>
           <section id="tecnologias" className="section container">
             <div className="section-heading"><p className="eyebrow"><span className="index">03 /</span> {t.skillsKicker}</p><h2>{t.skillsTitle}</h2><p className="section-lead">{t.skillsLead}</p></div>
