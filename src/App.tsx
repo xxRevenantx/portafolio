@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import DevLab from './DevLab'
+import ArchitectureExplorer from './ArchitectureExplorer'
 import RecruiterMode from './RecruiterMode'
 
 type Language = 'es' | 'en'
@@ -7,7 +8,7 @@ type Theme = 'dark' | 'light'
 
 const translations = {
   es: {
-    nav: { about: 'Sobre mí', projects: 'Proyectos', lab: 'DevLab', upcoming: 'Próximamente', skills: 'Tecnologías', journey: 'Trayectoria', contact: 'Contacto' },
+    nav: { about: 'Sobre mí', projects: 'Proyectos', lab: 'DevLab', architecture: 'Arquitectura', upcoming: 'Próximamente', skills: 'Tecnologías', journey: 'Trayectoria', contact: 'Contacto' },
     available: 'Abierto a oportunidades remotas',
     heroKicker: 'Desarrollador Full Stack · México',
     heroHeadline: 'Software que resuelve',
@@ -106,7 +107,7 @@ const translations = {
     menuButton: 'Abrir menú',
   },
   en: {
-    nav: { about: 'About', projects: 'Projects', lab: 'DevLab', upcoming: 'Coming soon', skills: 'Tech stack', journey: 'Experience', contact: 'Contact' },
+    nav: { about: 'About', projects: 'Projects', lab: 'DevLab', architecture: 'Architecture', upcoming: 'Coming soon', skills: 'Tech stack', journey: 'Experience', contact: 'Contact' },
     available: 'Open to remote opportunities',
     heroKicker: 'Full Stack Developer · Mexico',
     heroHeadline: 'Building software that solves',
@@ -455,6 +456,7 @@ export default function App() {
     ['#sobre-mi', t.nav.about],
     ['#proyectos', t.nav.projects],
     ['#laboratorio', t.nav.lab],
+    ['#arquitectura', t.nav.architecture],
     ['#tecnologias', t.nav.skills],
     ['#trayectoria', t.nav.journey],
     ['#contacto', t.nav.contact],
@@ -578,6 +580,7 @@ export default function App() {
              </div>
           </section>
           <DevLab language={language} />
+          <ArchitectureExplorer language={language} />
           <section id="proximos" className="section upcoming-section section-alt">
             <div className="container">
               <div className="section-heading" data-reveal="up">
