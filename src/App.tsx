@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import DevLab from './DevLab'
+import RecruiterMode from './RecruiterMode'
 
 type Language = 'es' | 'en'
 type Theme = 'dark' | 'light'
@@ -15,6 +16,7 @@ const translations = {
     seeProjects: 'Explorar proyectos',
     getInTouch: 'Contactar',
     seeResume: 'Consultar CV',
+    recruiterEntry: 'Modo reclutador',
     summaryTitle: 'Más allá de una interfaz.',
     summaryText: 'He participado en la digitalización de procesos educativos y desarrollo una plataforma nutricional multiplataforma. Busco colaborar de forma remota en equipos que valoren el código legible, la mejora continua y el impacto real.',
     stats: [
@@ -113,6 +115,7 @@ const translations = {
     seeProjects: 'Explore projects',
     getInTouch: 'Get in touch',
     seeResume: 'View résumé',
+    recruiterEntry: 'Recruiter mode',
     summaryTitle: 'More than a user interface.',
     summaryText: 'I have helped digitize educational workflows and I am building a cross-platform nutrition management application. I am looking for a remote team that values readable code, continuous improvement and meaningful results.',
     stats: [
@@ -410,8 +413,10 @@ export default function App() {
   const [theme, setTheme] = useState<Theme>(initialTheme)
   const [menuOpen, setMenuOpen] = useState(false)
   const [headerFixed, setHeaderFixed] = useState(false)
+  const [recruiterOpen, setRecruiterOpen] = useState(false)
   const [activeProject, setActiveProject] = useState<string | null>(null)
   const t = translations[language]
+  const closeRecruiter = useCallback(() => setRecruiterOpen(false), [])
   useScrollReveal()
 
   useEffect(() => {
@@ -470,6 +475,7 @@ export default function App() {
               {navigation.map(([href, label]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}
             </nav>
             <div className="header-actions">
+              <button type="button" className="recruiter-entry" onClick={() => { setMenuOpen(false); setRecruiterOpen(true) }}><span aria-hidden="true">✦</span><span>{t.recruiterEntry}</span></button>
               <button
                 className="theme-toggle"
                 type="button"
@@ -498,6 +504,7 @@ export default function App() {
               <p className="eyebrow hero-eyebrow">{t.heroKicker}</p>
               <TypewriterHero key={language} headline={t.heroHeadline} accent={t.heroAccent} intro={t.heroIntro} />
               <div className="hero-actions">
+                <button type="button" className="btn btn-recruiter" onClick={() => setRecruiterOpen(true)}>✦ {t.recruiterEntry}<Arrow /></button>
                 <a className="btn btn-primary" href="#proyectos">{t.seeProjects}<Arrow /></a>
                 <a className="btn btn-outline" href="#contacto">{t.getInTouch}<Arrow diagonal /></a>
                 <a className="text-link" href={language === 'es' ? './cv.html' : './cv-en.html'} target="_blank" rel="noopener noreferrer">{t.seeResume}<Arrow diagonal /></a>
@@ -614,6 +621,7 @@ export default function App() {
             </div>
           </section>
         </main>
+        <RecruiterMode language={language} open={recruiterOpen} onClose={closeRecruiter} />
         <footer className="site-footer"><div className="container footer-inner"><span className="brand-logo brand-logo--footer" aria-hidden="true"><HeroOrbLogo idPrefix="footer" /></span><p>© {new Date().getFullYear()}</p><p>{t.footer}</p></div></footer>
       </div>
     </>
