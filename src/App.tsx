@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
+import DevLab from './DevLab'
 
 type Language = 'es' | 'en'
 type Theme = 'dark' | 'light'
 
 const translations = {
   es: {
-    nav: { about: 'Sobre mí', projects: 'Proyectos', skills: 'Tecnologías', journey: 'Trayectoria', contact: 'Contacto' },
+    nav: { about: 'Sobre mí', projects: 'Proyectos', lab: 'DevLab', upcoming: 'Próximamente', skills: 'Tecnologías', journey: 'Trayectoria', contact: 'Contacto' },
     available: 'Abierto a oportunidades remotas',
     heroKicker: 'Desarrollador Full Stack · México',
     heroHeadline: 'Software que resuelve',
@@ -65,6 +66,14 @@ const translations = {
         stack: ['React', 'TypeScript', 'Tauri', 'Rust', 'SQLite', 'PostgreSQL', 'Laravel'],
       },
     ],
+    upcomingKicker: 'PRÓXIMOS PROYECTOS',
+    upcomingTitle: 'Lo que estoy explorando.',
+    upcomingLead: 'Conceptos en preparación. Se presentan como iniciativas futuras, no como productos terminados.',
+    upcomingStatus: 'Concepto / próximo proyecto',
+    upcoming: [
+      { id: 'auloria', name: 'Auloria', category: 'PRÓXIMO PROYECTO', description: 'Proyecto próximo en definición. Su alcance y tecnologías se documentarán cuando estén confirmados.', tags: ['En definición'] },
+      { id: 'cafe', name: 'Sistema de cafetería', category: 'PUNTO DE VENTA · KIOSCO', description: 'Concepto de plataforma para cafeterías que contempla kiosco de autoservicio, caja, cocina y administración, desarrollado por etapas.', tags: ['Kiosco', 'Caja', 'Cocina', 'Administración'] },
+    ],
     skillsKicker: 'COMPETENCIAS',
     skillsTitle: 'Mi caja de herramientas.',
     skillsLead: 'Tecnologías utilizadas en mis proyectos. Mi nivel general es intermedio y continúo profundizando en buenas prácticas y pruebas.',
@@ -95,7 +104,7 @@ const translations = {
     menuButton: 'Abrir menú',
   },
   en: {
-    nav: { about: 'About', projects: 'Projects', skills: 'Tech stack', journey: 'Experience', contact: 'Contact' },
+    nav: { about: 'About', projects: 'Projects', lab: 'DevLab', upcoming: 'Coming soon', skills: 'Tech stack', journey: 'Experience', contact: 'Contact' },
     available: 'Open to remote opportunities',
     heroKicker: 'Full Stack Developer · Mexico',
     heroHeadline: 'Building software that solves',
@@ -154,6 +163,14 @@ const translations = {
         ],
         stack: ['React', 'TypeScript', 'Tauri', 'Rust', 'SQLite', 'PostgreSQL', 'Laravel'],
       },
+    ],
+    upcomingKicker: 'UPCOMING PROJECTS',
+    upcomingTitle: 'What I am exploring next.',
+    upcomingLead: 'Projects at concept stage, not presented as completed or launched software.',
+    upcomingStatus: 'Concept / upcoming project',
+    upcoming: [
+      { id: 'auloria', name: 'Auloria', category: 'UPCOMING PROJECT', description: 'A future project still being defined. Scope and technologies will be added after they are confirmed.', tags: ['Under definition'] },
+      { id: 'cafe', name: 'Coffee shop system', category: 'POINT OF SALE · KIOSK', description: 'A staged software concept for coffee shops, combining self-service kiosk, point of sale, kitchen workflows, and administration.', tags: ['Kiosk', 'POS', 'Kitchen', 'Management'] },
     ],
     skillsKicker: 'CAPABILITIES',
     skillsTitle: 'The tools I use.',
@@ -432,6 +449,7 @@ export default function App() {
   const navigation = [
     ['#sobre-mi', t.nav.about],
     ['#proyectos', t.nav.projects],
+    ['#laboratorio', t.nav.lab],
     ['#tecnologias', t.nav.skills],
     ['#trayectoria', t.nav.journey],
     ['#contacto', t.nav.contact],
@@ -551,6 +569,26 @@ export default function App() {
                 ))}
               </div>
              </div>
+          </section>
+          <DevLab language={language} />
+          <section id="proximos" className="section upcoming-section section-alt">
+            <div className="container">
+              <div className="section-heading" data-reveal="up">
+                <p className="eyebrow"><span className="index">04 /</span> {t.upcomingKicker}</p>
+                <h2>{t.upcomingTitle}</h2>
+                <p className="section-lead">{t.upcomingLead}</p>
+              </div>
+              <div className="upcoming-grid">
+                {t.upcoming.map(project => <article className={'upcoming-card upcoming-card--' + project.id} key={project.id} data-reveal="up">
+                  <div className="upcoming-symbol" aria-hidden="true">{project.id === 'auloria' ? '✳' : '☕'}</div>
+                  <p className="eyebrow">{project.category}</p>
+                  <h3>{project.name}</h3>
+                  <p>{project.description}</p>
+                  <div className="chip-group">{project.tags.map(tag=><span className="chip" key={tag}>{tag}</span>)}</div>
+                  <div className="upcoming-status"><span />{t.upcomingStatus}</div>
+                </article>)}
+              </div>
+            </div>
           </section>
           <section id="tecnologias" className="section container">
             <div className="section-heading" data-reveal="up"><p className="eyebrow"><span className="index">03 /</span> {t.skillsKicker}</p><h2>{t.skillsTitle}</h2><p className="section-lead">{t.skillsLead}</p></div>
